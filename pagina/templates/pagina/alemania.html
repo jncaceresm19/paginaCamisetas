@@ -1,0 +1,219 @@
+{% extends 'pagina/base.html' %}
+{% load static %}
+{% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      let imgchange4 = document.getElementById("imgChange4");
+  
+      let localBtn = document.getElementById("local2");
+      let visitaBtn = document.getElementById("visita2");
+      let alternativaBtn = document.getElementById("alternativa");
+  
+      let imgLocal = "{% static 'pagina/img/europa/alemania/BAYERLOCAL.jpg' %}";
+      let imgVisita = "{% static 'pagina/img/europa/alemania/LEVERKUSENLOCAL.jpg' %}";
+      let imgAlternativa = "";
+  
+      function changeImage(color) {
+          if (color === 'local') {
+              imgchange4.src = imgLocal;
+          } else if (color === 'visita') {
+              imgchange4.src = imgVisita;
+          } else if (color === 'alternativa') {
+              imgchange4.src = imgAlternativa;
+          }
+      }
+  
+      localBtn.addEventListener("click", function() {
+          changeImage('local');
+      });
+      visitaBtn.addEventListener("click", function() {
+          changeImage('visita');
+      });
+      alternativaBtn.addEventListener("click", function() {
+          changeImage('alternativa');
+      });
+      
+      changeImage('local');
+  });
+</script>
+<script>
+  window.onload = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var imageUrl = urlParams.get('imageUrl');
+
+    if (imageUrl) {
+      document.getElementById('imgChange4').src = imageUrl;
+    }
+  };
+</script>
+{% endblock %}
+
+{% block contenido %} 
+<!--Container bayerns-->
+<br><br><h3 class="text1">Seleciona Camiseta Bayern Munich/Leverkusen:</h3>
+<div class="seleccion-camiseta-E">
+  <div id="local2"><H5>Munich</H5></div>
+  <div id="visita2"><H5>Leverkusen</H5></div>
+</div><br>
+  <div class="contenedor" id="lista-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="contenedor-img">
+              <img src="" id="imgChange4" alt="" class="img-fluid" />
+            </div>
+          </div>
+        <div class="col-lg-6">
+          <div class="contenedor-info-prod">
+            <h1>2024-2025</h1>
+            <div class="contenedor-precio">
+              <span class="precio">$50.000 CLP</span>
+            </div>
+  
+          <div class="contenedor-detalles-prod">
+              <div class="form-group">
+                <label for="talla">Talla</label>
+                <select name="size" id="size" class="form-control">
+                  <option disabled selected value="">Escoge una opción</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </div>
+          </div>
+  
+          <div class="contenedor-detalles-prod-per">
+            <h4>Personaliza tu camiseta</h4>
+            <section class="regist-name-num">
+              <h>Nombre</h>
+              <input class="form-controls" type="text" name="nombres" id="nombres">
+              <p>$5.000 (indique NOMBRE para camiseta)</p> 
+              <h>Número</h>
+              <input class="form-controls" type="text" name="número" id="numero">
+              <p>$5.000 (indique NUMERO para camiseta)</p>
+            </section>          
+          </div>
+  
+          <div class="contenedor-add-cart">
+            <div class="contenedor-cantidad">
+              <input type="number" placeholder="1" value="1" min="1" class="form-controls input-cantidad"/>
+            </div>
+            <button class="btn btn-add-cart" id="carrito">
+            <a href="#" data-id="1"><i class="bi-cart-plus"></i></a>    
+            </button>
+            <a href="comprar.html" class="btn btn-add-cart">Comprar</a>                               
+          </div>
+        
+      <div class="contenedor-descrip">
+          <div class="title-descrip">
+            <h4>Descripción</h4>
+          </div>
+          <div class="text-descrip">
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
+              delectus commodi, mollitia, consequatur ex dolorum maiores beatae
+              quidem maxime rem, dolore ullam recusandae repudiandae tempora.
+              Unde neque suscipit voluptas facere!, Lorem ipsum dolor, sit amet 
+              consectetur adipisicing elit. Sint delectus commodi, mollitia, 
+              consequatur ex dolorum maiores beatae uidem maxime rem, dolore
+              ullam recusandae repudiandae tempora.Unde neque suscipit voluptas 
+              facere!
+            </p>
+          </div>
+      </div>
+  
+      <div class="contenedor-info-add">
+          <div class="title-info-add">
+            <h4>Información adicional</h4>
+          </div>
+          <div class="text-info-add">
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
+              delectus commodi, mollitia, consequatur ex dolorum maiores beatae
+              quidem maxime rem, dolore ullam recusandae repudiandae tempora.
+              Unde neque suscipit voluptas facere!
+            </p>
+          </div>
+      </div>
+      <div class="contenedor-social">
+          <h4>Compartir</h4>
+          <div class="contenedor-btn-social">
+            <i class="bi bi-instagram"></i>
+            <i class="bi bi-facebook"></i>
+            <i class="bi bi-twitter"></i>                      
+          </div>
+      </div>
+      </div>   
+      </div>
+      </div>   
+  </div> 
+<!--sección interes camisetas-->
+<div class="container">
+    <h3 class="text-center">También te recomendamos</h3><br>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div class="col-md-4">
+            <div class="card">
+              <img src="{% static 'pagina/img/chile/Camiseta_Local_Colo-Colo_2024_Blanco_IQ2515_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
+              <div class="card-body">
+                <h4 class="card-title fw-bold">COLO-COLO</h4>
+                <h5 class="card-title fw-bold">Local 2024-2025</h5>
+                <div class="rating">
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                </div>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              </div>
+              <div class="d-flex justify-content-around mb-4">
+                <a href="{% url 'cololocal' %}" class="btn btn-primary ">Ver mas</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img src="{% static 'pagina/img/chile/Camiseta_Local_Chile_2024_Rojo_IP8453_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
+              <div class="card-body">
+                <h4 class="card-title fw-bold">SELECIÓN CHILENA</h4>
+                <h5 class="card-title fw-bold">Local 2024-2025</h5>
+                <div class="rating">
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                </div>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              </div>
+              <div class="d-flex justify-content-around mb-4">
+                <a href="{% url 'selechile' %}" class="btn btn-primary ">Ver mas</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img src="{% static 'pagina/img/brasil/brasillocal.webp' %}" class="card-img img-fluid" alt="...">
+              <div class="card-body">
+                <h4 class="card-title fw-bold">BRASIL</h4>
+                <h5 class="card-title fw-bold">Local 2024-2025</h5>
+                <div class="rating">
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                  <i class="bi bi-star star"></i>
+                </div>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              </div>
+              <div class="d-flex justify-content-around mb-4">
+                <a href="{% url 'brasil' %}" class="btn btn-primary ">Ver mas</a>
+              </div>
+            </div>
+          </div>
+        </div><br><br>
+</div><br><br>
+
+{% endblock %}
+

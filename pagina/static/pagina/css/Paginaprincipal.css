@@ -1,0 +1,210 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.no-under-line {
+    text-decoration: none;
+}
+/*navbar*/
+.dropdown-item{
+    color:aliceblue;
+}
+.dropdown-item:hover{
+    background-color:rgba(48, 48, 48, 0);
+    color:rgba(155, 154, 154, 0.836);
+}
+.bi-cart-fill{
+    color:rgb(207, 207, 207); 
+}
+.bi-cart-fill:hover{
+    color:rgba(155, 154, 154, 0.836);
+}
+
+/*imagen carrusel*/
+.imgCarrousel{
+    width: 100%;
+    height: 47vw;
+}
+.body{
+    height: 5000px;
+    overflow-x: hidden;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto; 
+    max-height: 350px; 
+}
+@media (max-width: 576px) {
+    /*para dispositivos móviles */
+    .card-img-top {
+        max-height: 250px; 
+    }
+}
+
+.text-center{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.card{
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    transition:  all 400ms ease;
+}
+.card:hover{
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3%); /*translada vertical a -3, al pasar el cursor x la tarjeta se translada*/
+
+}
+.card-body{
+    padding: 25px;
+    margin-top: -15px;
+}
+.btn-primary{
+    border-radius: 16px;
+    width: 105px;
+    background-color: rgba(255, 255, 255, 0.856);
+    border-color:#1bb3b4;
+    border: 2px solid #1bb3b4;
+    display: inline-block;
+    transition:  all 400ms ease;
+    color: #1bb3b4;
+}
+.btn-primary:hover{
+    background-color: black;
+    color: rgb(240, 231, 219);
+    border-color: black;
+}
+.card-title{
+    text-align: center;
+}
+.card-text{
+    text-align: justify;
+}
+.rating{
+    text-align: center;
+    color: gold;
+}
+
+/*consulta*/
+.CONSULTA-btn:hover{
+    background-color: #666565;
+    color:aliceblue;
+}
+.CONSULTA-btn{
+    border-radius: 30px;
+    width: 120px;
+    height: 38px;
+    background-color: rgb(0, 0, 0);
+    border-color: rgb(240, 231, 219);
+    color: aliceblue;
+}
+.card-text{
+    position: center;
+    text-align: center;
+}
+/*consulta modal*/
+.card2{
+    margin-left: 50%;
+    margin-right: 50%;
+    width: 50%;
+    height: 70%;
+}
+/*boton subir*/
+.btn-subir{
+    position: fixed;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    bottom: 30px;
+    right: 30px;
+    background: #ffffff;
+    color:#1bb3b4;
+    border-color: #1bb3b4;
+    border: 3px solid #1bb3b4;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 35px;
+    box-shadow: 0px 1px 10px rgb(0, 0, 0,0.3);
+}
+.btn-subir:hover{
+    text-decoration: none;
+    background: #1bb3b4;
+    color:#ffffff;
+    border-color: #ffffff;
+    border: 3px solid #ffffff;
+}
+/*carrito*/
+.offcanvas-header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.219);
+}
+/*pie de pagina*/
+.pie-pagina {
+    position: static;
+    width: 100%;
+    background-color: #0a141d;
+    color: white; 
+    text-align: center; 
+}
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+    padding: 45px 0p;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+.pie-pagina .grupo-1 .box h2{
+    color: white;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #e6dfdfea;
+    margin-bottom: 10px;
+}
+.pie-pagina .grupo-1 .social-media a{
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: rgb(255, 255, 255);
+    margin-right: 10px;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .social-media a:hover{
+    color:#1bb3b4
+}
+.pie-pagina .grupo-2{
+    padding: 15px 10px;
+    text-align: center;
+    color: #e6dfdfea;
+}
+@media screen and (max-width: 800px){
+    .pie-pagina .grupo-1{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 30px;
+        padding: 35px 0p;
+    }
+}

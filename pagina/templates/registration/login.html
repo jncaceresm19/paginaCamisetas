@@ -1,0 +1,49 @@
+{% extends 'pagina/base.html' %}
+
+{% block contenido %}
+
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <center><h1><a><span class="text-warning">LATINS</span>TOREFUT</a></h1></center>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Nombre de usuario</label>
+                            <input type="text" id="id_username" name="username" class="form-control" placeholder="Ingresar Nombre de usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Contraseña</label>
+                            <input type="password" id="id_password" name="password" class="form-control" placeholder="Ingresar Contraseña" required>
+                        </div><br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="{% url 'index' %}" class="btn btn-link no-under-line">Ir al home</a>|
+                                <a href="{% url 'registro' %}" class="btn btn-link no-under-line">Registrarse</a>
+                            </div>
+                            <button type="submit" class="btn btn-success">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

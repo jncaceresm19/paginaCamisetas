@@ -1,0 +1,75 @@
+{% extends 'pagina/base.html' %}
+{% load static %}
+
+{% block js %}
+<script src="{% static 'pagina/js/mijs.js' %}"></script>
+{% endblock %}
+
+{% block contenido %} 
+<!--Imagen BANNER-->
+<center><img class="imglogo img-fluid" src="{% static 'pagina/img/bannerestadiooorestoooo.avif' %}" alt="centered image" height="50%" width="100%"><br><br>
+</center>
+  <!--sección Resto el mundo-->
+  {% load humanize %}
+  <div class="container">
+   <h3 class="text-center">Camisetas más vendidas sección Resto del Mundo</h3><br>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for p in productos_restomundo %}
+        <div class="col-md-4">
+          <div class="card">
+            {% if p.imagen %}
+            <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+            {% endif %}
+            <div class="card-body">
+              <h4 class="card-title fw-bold">{{p.nombre}}</h4>
+              <h5 class="card-title fw-bold">{{p.descripcion}}</h5>
+              <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
+              <div class="rating">
+                <i class="bi bi-star star"></i>
+                <i class="bi bi-star star"></i>
+                <i class="bi bi-star star"></i>
+                <i class="bi bi-star star"></i>
+                <i class="bi bi-star star"></i>
+              </div>
+              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="d-flex justify-content-around mb-4">
+              <a href="#" class="btn btn-primary ">Ver mas</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+  </div><br><br>
+  
+  <!--sección interes-->
+  <h3 class="text-center">Tambien te recomendamos</h3><br>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for p in productos_interes %}
+    <div class="col-md-4">
+      <div class="card">
+        {% if p.imagen %}
+        <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+        {% endif %}
+        <div class="card-body">
+          <h4 class="card-title fw-bold">{{p.nombre}}</h4>
+          <h5 class="card-title fw-bold">{{p.descripcion}}</h5>
+          <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
+          <div class="rating">
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+          </div>
+          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+        <div class="d-flex justify-content-around mb-4">
+          <a href="#" class="btn btn-primary ">Ver mas</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</div><br><br>
+
+{% endblock %}

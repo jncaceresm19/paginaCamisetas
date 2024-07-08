@@ -1,0 +1,33 @@
+{% extends 'pagina/base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <br><center><h2>Contactanos!</h2></center>
+                    <hr>
+                    <form action="" class="formulario_contacto" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <hr>
+                        <br>
+                        <div class="d-flex justify-content-end">
+                            <input type="reset" value="Cancelar" class="btn btn-primary">
+                            &nbsp;
+                            <button type="submit" id="btnEnviar" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                    {{mensaje}}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <table id="tablacontactos"></table>
+    <br><br><br><br><br><br><br><br><br>
+</div>
+{% endblock %}
