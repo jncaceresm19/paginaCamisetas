@@ -48,9 +48,22 @@
     }
   };
 </script>
+
+<script>
+  document.getElementById('local').addEventListener('click', function() {
+  document.getElementById('producto-11').style.display = 'block';
+  document.getElementById('producto-12').style.display = 'none';
+});
+
+  document.getElementById('visita').addEventListener('click', function() {
+  document.getElementById('producto-11').style.display = 'none';
+  document.getElementById('producto-12').style.display = 'block';
+});
+</script>
 {% endblock %}
 
 {% block contenido %} 
+{% load humanize %}
 <!--Imagen BANNER-->
  <center><img class="imglogo img-fluid" src="{% static 'pagina/img/brasil/banner.webp' %}" alt="centered image" height="30%" width="100%"><br><br>
  </center>
@@ -73,26 +86,45 @@
             </div>
           </div>
         <div class="col-lg-6">
-          <div class="contenedor-info-prod">
-            <h1>SELECCIÓN DE BRASIL 2024-2025</h1>
+          {% for p in productos_brasil %}
+          {% if p.id == 11 %}
+          <br><div class="contenedor-info-prod" id="producto-11" style="display: block;">
+            <h1>{{p.nombre}}</h1>
+            <h5>{{p.descripcion}}</h5>
             <div class="contenedor-precio">
-              <span>$50.000 CLP</span>
-            </div>
-    
-          <div class="contenedor-detalles-prod">
+              <span class="precio">${{p.precio | intcomma}}</span>
+            </div><br>
+           <div class="contenedor-detalles-prod">
               <div class="form-group">
-                <label for="talla">Talla</label>
+                <label for="talla">Tallas</label>
                 <select name="size" id="size" class="form-control">
-                  <option disabled selected value="">Escoge una opción</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                {% for talla in p.talla.all %}
+                  <option value="{{ talla }}">{{ talla.nombre }}</option>
+                {% endfor %}
                 </select>
               </div>
+            </div>
           </div>
-    
+          {% elif p.id == 12 %}
+          <div class="contenedor-info-prod" id="producto-12" style="display: none;">
+            <h1>{{p.nombre}}</h1>
+            <h5>{{p.descripcion}}</h5>
+            <div class="contenedor-precio">
+              <span class="precio">${{p.precio | intcomma}}</span>
+            </div><br>
+           <div class="contenedor-detalles-prod">
+              <div class="form-group">
+                <label for="talla">Tallas</label>
+                <select name="size" id="size" class="form-control">
+                {% for talla in p.talla.all %}
+                  <option value="{{ talla }}">{{ talla.nombre }}</option>
+                {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div><hr>
+          {% endif %}
+        {% endfor %}
           <div class="contenedor-detalles-prod-per">
             <h4>Personaliza tu camiseta</h4>
             <section class="regist-name-num">
@@ -103,8 +135,8 @@
               <input class="form-controls" type="text" name="número" id="numero">
               <p>$5.000 (indique NUMERO para camiseta)</p>
             </section>          
-          </div>
-    
+          </div><hr>
+          
           <div class="contenedor-add-cart">
             <div class="contenedor-cantidad">
               <input type="number" placeholder="1" value="1" min="1" class="form-controls input-cantidad"/>
@@ -112,7 +144,7 @@
             <button class="btn btn-add-cart" id="carrito">
             <a href="#" data-id="1"><i class="bi-cart-plus"></i></a>    
             </button>
-            <a href="comprar.html" class="btn btn-add-cart">Comprar</a>                               
+            <a href="#" class="btn btn-add-cart">Comprar</a>                               
           </div>
         
       <div class="contenedor-descrip">
@@ -132,7 +164,7 @@
             </p>
           </div>
       </div>
-    
+  
       <div class="contenedor-info-add">
           <div class="title-info-add">
             <h4>Información adicional</h4>
@@ -156,8 +188,8 @@
       </div>
       </div>   
       </div>
-    </div>   
-</div>
+      </div>   
+  </div> 
 <!--FOTOS-->
 <center>
   <img class="imglogo img-fluid" src="{% static 'pagina/img/brasil/ney3.jpg' %}" alt="centered image" height="600" width="400"> 
@@ -167,83 +199,33 @@
 
   <!--sección interes camisetas-->
   <div class="container">
-    <h3 class="text-center">También te recomendamos</h3><br>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/chile/Camiseta_Local_Colo-Colo_2024_Blanco_IQ2515_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">COLO-COLO</h4>
-                <h5 class="card-title fw-bold">Local 2024-2025</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'cololocal' %}" class="btn btn-primary ">Ver mas</a>
-              </div>
+    <h3 class="text-center">Tambien te recomendamos</h3><br>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for p in productos_interes %}
+      <div class="col-md-4">
+        <div class="card">
+          {% if p.imagen %}
+          <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h4 class="card-title fw-bold">{{p.nombre}}</h4>
+            <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
+            <div class="rating">
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
             </div>
+            <p class="card-text">{{p.descripcion}}</p>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/chile/LOCALU.webp' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">UNIVERSIDAD DE CHILE</h4>
-                <h5 class="card-title fw-bold">Local 2024-2025</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'udechilelocal' %}" class="btn btn-primary ">Ver mas</a>
-              </div>
-            </div>
+          <div class="d-flex justify-content-around mb-4">
+            <a href="#" class="btn btn-primary ">Ver mas</a>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/Europa/Alemania/BAYERLOCAL.jpg' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">BAYERN MUNICH</h4>
-                <h5 class="card-title fw-bold">Local 2024-2025</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'alemania' %}" class="btn btn-primary ">Ver mas</a>
-              </div>
-            </div>
-          </div>
-        </div><br>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
   </div><br><br>
   
-  <script>
-    window.onload = function() {
-      // Obtener la URL de la imagen de la tarjeta desde la URL actual
-      var urlParams = new URLSearchParams(window.location.search);
-      var imageUrl = urlParams.get('imageUrl');
-  
-      if (imageUrl) {
-        // Cambiar la imagen en el contenedor-img con la URL de la imagen de la tarjeta
-        document.getElementById('imgChange5').src = imageUrl;
-      }
-    };
-  </script>
-
 {% endblock %}

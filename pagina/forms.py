@@ -20,7 +20,7 @@ class ProductoForm(forms.ModelForm):
 
     class Meta:
         model = Producto
-        fields = ['nombre', 'descripcion','marca','stock', 'precio', 'fecha_recepcion', 'tallas_disponibles', 'imagen']
+        fields = ['nombre', 'descripcion','marca','stock', 'precio', 'fecha_recepcion', 'talla', 'imagen']
 
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
@@ -29,7 +29,7 @@ class ProductoForm(forms.ModelForm):
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control'}),
             'fecha_recepcion': forms.DateInput(attrs={'class': 'form-control'}),
-            'tallas_disponibles': forms.TextInput(attrs={'class': 'form-control'}),
+            'talla': forms.TextInput(attrs={'class': 'form-control'}),
             'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

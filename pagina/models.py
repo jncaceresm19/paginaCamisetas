@@ -6,15 +6,21 @@ class Marca(models.Model):
     def __str__(self):
         return self.nombre
 
+class Talla(models.Model):
+    nombre = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.nombre
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()  
+    descripcion = models.TextField()
     stock = models.IntegerField()
-    precio = models.IntegerField()  
+    precio = models.IntegerField()
     fecha_recepcion = models.DateField()
-    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
-    tallas_disponibles = models.CharField(max_length=100)  
-    imagen = models.ImageField(upload_to = "productos", null=True)
+    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)  
+    talla = models.ManyToManyField(Talla) 
+    imagen = models.ImageField(upload_to="productos", null=True)
 
     def __str__(self):
         return self.nombre

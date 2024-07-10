@@ -48,11 +48,37 @@
     }
   };
 </script>
+
+<script>
+  document.getElementById('local').addEventListener('click', function() {
+  document.getElementById('producto-15').style.display = 'block';
+  document.getElementById('producto-16').style.display = 'none';
+  document.getElementById('producto-17').style.display = 'none';
+});
+
+  document.getElementById('visita').addEventListener('click', function() {
+  document.getElementById('producto-15').style.display = 'none';
+  document.getElementById('producto-16').style.display = 'block';
+  document.getElementById('producto-17').style.display = 'none';
+});
+
+  document.getElementById('alternativa').addEventListener('click', function() {
+  document.getElementById('producto-15').style.display = 'none';
+  document.getElementById('producto-16').style.display = 'none';
+  document.getElementById('producto-17').style.display = 'block';
+});
+</script>
+
 {% endblock %}
 
 {% block contenido %} 
+{% load humanize %}
+<!--Imagen de logo liga-->
+<header class="d-flex justify-content-center align-items-center">
+  <center><img class="imglogo img-fluid"src="{% static 'pagina/img/logocolo.webp' %}" alt="centered image" height="30%" width="30%"> </center>
+</header>
 <!--Container COLOCOLO-->
-<br><br><h3 class="text1">Seleciona Camiseta Local/Visita/Alternativa:</h3>
+<h3 class="text1">Seleciona Camiseta Local/Visita/Alternativa:</h3>
 <div class="seleccion-camiseta">
   <div id="local"><H5>L</H5></div>
   <div id="visita"><H5>V</H5></div>
@@ -66,25 +92,63 @@
             </div>
           </div>
         <div class="col-lg-6">
-          <div class="contenedor-info-prod">
-            <h1>COLO-COLO 2024-2025</h1>
+          {% for p in productos_colo %}
+          {% if p.id == 15 %}
+          <br><div class="contenedor-info-prod" id="producto-15" style="display: block;">
+            <h1>{{p.nombre}}</h1>
+            <h5>{{p.descripcion}}</h5>
             <div class="contenedor-precio">
-              <span>$50.000 CLP</span>
-            </div>
-  
-          <div class="contenedor-detalles-prod">
+              <span class="precio">${{p.precio | intcomma}}</span>
+            </div><br>
+           <div class="contenedor-detalles-prod">
               <div class="form-group">
-                <label for="talla">Talla</label>
+                <label for="talla">Tallas</label>
                 <select name="size" id="size" class="form-control">
-                  <option disabled selected value="">Escoge una opción</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                {% for talla in p.talla.all %}
+                  <option value="{{ talla }}">{{ talla.nombre }}</option>
+                {% endfor %}
                 </select>
               </div>
+            </div>
           </div>
+          {% elif p.id == 16 %}
+          <div class="contenedor-info-prod" id="producto-16" style="display: none;">
+            <h1>{{p.nombre}}</h1>
+            <h5>{{p.descripcion}}</h5>
+            <div class="contenedor-precio">
+              <span class="precio">${{p.precio | intcomma}}</span>
+            </div><br>
+           <div class="contenedor-detalles-prod">
+              <div class="form-group">
+                <label for="talla">Tallas</label>
+                <select name="size" id="size" class="form-control">
+                {% for talla in p.talla.all %}
+                  <option value="{{ talla }}">{{ talla.nombre }}</option>
+                {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          {% elif p.id == 17 %}
+          <div class="contenedor-info-prod" id="producto-17" style="display: none;">
+            <h1>{{p.nombre}}</h1>
+            <h5>{{p.descripcion}}</h5>
+            <div class="contenedor-precio">
+              <span class="precio">${{p.precio | intcomma}}</span>
+            </div><br>
+           <div class="contenedor-detalles-prod">
+              <div class="form-group">
+                <label for="talla">Tallas</label>
+                <select name="size" id="size" class="form-control">
+                {% for talla in p.talla.all %}
+                  <option value="{{ talla }}">{{ talla.nombre }}</option>
+                {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div><hr>
+          {% endif %}
+        {% endfor %}
   
           <div class="contenedor-detalles-prod-per">
             <h4>Personaliza tu camiseta</h4>
@@ -151,70 +215,35 @@
       </div>
       </div>   
     </div> 
-  <!--sección interes camisetas-->
-  <div class="container">
-    <h3 class="text-center">También te recomendamos</h3><br>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/chile/Camiseta_Visita_Colo-Colo_2024_Negro_IZ0720_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">COLO-COLO</h4>
-                <h5 class="card-title fw-bold">Visita 2024-2025</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'cololocal' %}?imageUrl=/static/pagina/img/chile/Camiseta_Visita_Colo-Colo_2024_Negro_IZ0720_01_laydown.avif" class="btn btn-primary">Ver más</a>
-              </div>
-            </div>
+ <!--sección interes camisetas-->
+<div class="container">
+  <h3 class="text-center">Tambien te recomendamos</h3><br>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for p in productos_interes %}
+    <div class="col-md-4">
+      <div class="card">
+        {% if p.imagen %}
+        <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+        {% endif %}
+        <div class="card-body">
+          <h4 class="card-title fw-bold">{{p.nombre}}</h4>
+          <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
+          <div class="rating">
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/chile/Camiseta_Local_Chile_2024_Rojo_IP8453_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">SELECIÓN CHILENA</h4>
-                <h5 class="card-title fw-bold">Local 2024-2025</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'selechile' %}" class="btn btn-primary ">Ver mas</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="{% static 'pagina/img/chile/COLO_3RD_JSY_Dorado_GC6046_01_laydown.avif' %}" class="card-img img-fluid" alt="...">
-              <div class="card-body">
-                <h4 class="card-title fw-bold">COLO-COLO</h4>
-                <h5 class="card-title fw-bold">Gold 2023-2024</h5>
-                <div class="rating">
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                  <i class="bi bi-star star"></i>
-                </div>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-              <div class="d-flex justify-content-around mb-4">
-                <a href="{% url 'cololocal' %}?imageUrl=/static/pagina/img/chile/COLO_3RD_JSY_Dorado_GC6046_01_laydown.avif" class="btn btn-primary">Ver más</a>
-              </div>
-            </div>
-          </div>
-        </div><br><br>
-  </div><br><br>
+          <p class="card-text">{{p.descripcion}}</p>
+        </div>
+        <div class="d-flex justify-content-around mb-4">
+          <a href="#" class="btn btn-primary ">Ver mas</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</div><br><br>
+
 {% endblock %}

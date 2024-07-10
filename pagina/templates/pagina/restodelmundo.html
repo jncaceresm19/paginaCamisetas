@@ -52,7 +52,6 @@
         {% endif %}
         <div class="card-body">
           <h4 class="card-title fw-bold">{{p.nombre}}</h4>
-          <h5 class="card-title fw-bold">{{p.descripcion}}</h5>
           <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
           <div class="rating">
             <i class="bi bi-star star"></i>
@@ -61,7 +60,7 @@
             <i class="bi bi-star star"></i>
             <i class="bi bi-star star"></i>
           </div>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p class="card-text">{{p.descripcion}}</p>
         </div>
         <div class="d-flex justify-content-around mb-4">
           <a href="#" class="btn btn-primary ">Ver mas</a>

@@ -25,13 +25,43 @@ def index(request):
     return render(request, 'pagina/index.html', data)
 
 def alemania(request):
-    return render(request, 'pagina/alemania.html')
+    alemania_ids = [1, 2]
+    productos_alemania = Producto.objects.filter(pk__in=alemania_ids)
+
+    interes_ids = [11, 14, 15]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_alemania': productos_alemania,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/alemania.html', data)
 
 def brasil(request):
-    return render(request, 'pagina/brasil.html')
+    brasil_ids = [11, 12]
+    productos_brasil = Producto.objects.filter(pk__in=brasil_ids)
+
+    interes_ids = [9, 15, 18]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_brasil': productos_brasil,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/brasil.html', data)
 
 def argentina(request):
-    return render(request, 'pagina/argentina.html')
+    argentina_ids = [9, 10]
+    productos_argentina = Producto.objects.filter(pk__in=argentina_ids)
+
+    interes_ids = [11, 14, 15]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_argentina': productos_argentina,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/argentina.html', data)
 
 def colocolo(request):
     colocolo_ids = [15, 16, 17]
@@ -47,7 +77,17 @@ def colocolo(request):
     return render(request, 'pagina/colocolo.html', data)
 
 def cololocal(request):
-    return render(request, 'pagina/cololocal.html')
+    colo_ids = [15, 16, 17]
+    productos_colo = Producto.objects.filter(pk__in=colo_ids)
+
+    interes_ids = [2, 9, 11]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_colo': productos_colo,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/cololocal.html',data)
 
 def comprar(request):
     return render(request, 'pagina/comprar.html')
@@ -68,14 +108,43 @@ def contacto(request):
     return render(request, 'pagina/contacto.html', data)
 
 def madrid(request):
-    return render(request, 'pagina/madrid.html')
+    madrid_ids = [3, 4]
+    productos_madrid = Producto.objects.filter(pk__in=madrid_ids)
+
+    interes_ids = [2, 15, 18]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_madrid': productos_madrid,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/madrid.html', data)
 
 def manchester(request):
-    return render(request, 'pagina/manchester.html')
+    manchester_ids = [5, 6]
+    productos_manchester = Producto.objects.filter(pk__in=manchester_ids)
+
+    interes_ids = [3, 7, 10]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_manchester': productos_manchester,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/manchester.html', data)
 
 def psg(request):
-    return render(request, 'pagina/psg.html')
+    psg_ids = [7, 8]
+    productos_psg = Producto.objects.filter(pk__in=psg_ids)
 
+    interes_ids = [10, 12, 14]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_psg': productos_psg,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/psg.html',data)
 
 def restodelmundo(request):
     resto_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -90,9 +159,18 @@ def restodelmundo(request):
     }
     return render(request, 'pagina/restodelmundo.html', data)
 
-
 def selechile(request):
-    return render(request, 'pagina/selechile.html')
+    selechile_ids = [13, 14]
+    productos_chile = Producto.objects.filter(pk__in=selechile_ids)
+
+    interes_ids = [5, 15, 18]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_chile': productos_chile,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/selechile.html', data)
 
 def uchile(request):
     lau_ids = [18, 19, 20]
@@ -108,7 +186,17 @@ def uchile(request):
     return render(request, 'pagina/uchile.html', data)
 
 def udechilelocal(request):
-    return render(request, 'pagina/udechilelocal.html')
+    u_ids = [18, 19, 20]
+    productos_u = Producto.objects.filter(pk__in=u_ids)
+
+    interes_ids = [10, 12, 14]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'productos_u': productos_u,
+        'productos_interes': productos_interes,
+        }
+    return render(request, 'pagina/udechilelocal.html', data)
 
 @permission_required('pagina.add_producto')
 def agregar_producto(request):
