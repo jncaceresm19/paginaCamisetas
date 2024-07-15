@@ -92,13 +92,13 @@
       <div class="col-lg-6">
         {% for p in productos_argentina %}
         {% if p.id == 9 %}
-        <br><div class="contenedor-info-prod" id="producto-9" style="display: block;">
+        <br><div class="contenedor-info-prod" id="producto-1" style="display: block;">
           <h1>{{p.nombre}}</h1>
           <h5>{{p.descripcion}}</h5>
           <div class="contenedor-precio">
             <span class="precio">${{p.precio | intcomma}}</span>
           </div><br>
-         <div class="contenedor-detalles-prod">
+          <div class="contenedor-detalles-prod">
             <div class="form-group">
               <label for="talla">Tallas</label>
               <select name="size" id="size" class="form-control">
@@ -108,7 +108,26 @@
               </select>
             </div>
           </div>
+
+          <div class="contenedor-detalles-prod-per">
+            <h4>Personaliza tu camiseta</h4>
+            <form id="form-agregar-carrito" method="POST" action="{% url 'agregar' p.id %}">
+                {% csrf_token %}
+                <section class="regist-name-num">
+                    <label for="nombres">Nombre</label>
+                    <input class="form-controls" type="text" name="nombre" id="nombres">
+                    <p>$5.000 (indique NOMBRE para camiseta)</p> 
+                    <label for="numero">Número</label>
+                    <input class="form-controls" type="text" name="numero" id="numero">
+                    <p>$5.000 (indique NUMERO para camiseta)</p>
+                    <div class="contenedor-add-cart">
+                      <button type="submit" class="btn btn-add-cart btn-link"><i class="bi-cart-plus"></i></button>
+                      <a href="#" class="btn btn-add-cart">Comprar</a>                               
+                    </div>
+                </section>          
+            </form>
         </div>
+      </div>
         {% elif p.id == 10 %}
         <div class="contenedor-info-prod" id="producto-10" style="display: none;">
           <h1>{{p.nombre}}</h1>
@@ -116,7 +135,7 @@
           <div class="contenedor-precio">
             <span class="precio">${{p.precio | intcomma}}</span>
           </div><br>
-         <div class="contenedor-detalles-prod">
+          <div class="contenedor-detalles-prod">
             <div class="form-group">
               <label for="talla">Tallas</label>
               <select name="size" id="size" class="form-control">
@@ -126,30 +145,28 @@
               </select>
             </div>
           </div>
-        </div><hr>
-        {% endif %}
-      {% endfor %}
+
           <div class="contenedor-detalles-prod-per">
             <h4>Personaliza tu camiseta</h4>
-            <section class="regist-name-num">
-              <h>Nombre</h>
-              <input class="form-controls" type="text" name="nombres" id="nombres">
-              <p>$5.000 (indique NOMBRE para camiseta)</p> 
-              <h>Número</h>
-              <input class="form-controls" type="text" name="número" id="numero">
-              <p>$5.000 (indique NUMERO para camiseta)</p>
-            </section>          
-          </div>
-          
-          <div class="contenedor-add-cart">
-            <div class="contenedor-cantidad">
-              <input type="number" placeholder="1" value="1" min="1" class="form-controls input-cantidad"/>
-            </div>
-            <button class="btn btn-add-cart" id="carrito">
-            <a href="#" data-id="1"><i class="bi-cart-plus"></i></a>    
-            </button>
-            <a href="#" class="btn btn-add-cart">Comprar</a>                               
-          </div>
+            <form id="form-agregar-carrito" method="POST" action="{% url 'agregar' p.id %}">
+                {% csrf_token %}
+                <section class="regist-name-num">
+                    <label for="nombres">Nombre</label>
+                    <input class="form-controls" type="text" name="nombre" id="nombres">
+                    <p>$5.000 (indique NOMBRE para camiseta)</p> 
+                    <label for="numero">Número</label>
+                    <input class="form-controls" type="text" name="numero" id="numero">
+                    <p>$5.000 (indique NUMERO para camiseta)</p>
+                    <div class="contenedor-add-cart">
+                      <button type="submit" class="btn btn-add-cart btn-link"><i class="bi-cart-plus"></i></button>
+                      <a href="#" class="btn btn-add-cart">Comprar</a>                               
+                    </div>
+                </section>          
+            </form>
+        </div>
+      </div>
+          {% endif %}
+        {% endfor %}
         
       <div class="contenedor-descrip">
           <div class="title-descrip">

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Producto
+from .models import Producto, Talla
 from .forms import ContactoForm, ProductoForm, LoginForm, CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, permission_required
-
+from .carrito import Carrito
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -23,6 +24,9 @@ def index(request):
         'productos_chile': productos_chile,
     }
     return render(request, 'pagina/index.html', data)
+
+def base(request):
+    return render(request, 'pagina/base.html')
 
 def alemania(request):
     alemania_ids = [1, 2]
@@ -277,4 +281,39 @@ def registro(request):
             return redirect(to="index")
         data["form"]=formulario
     return render(request, 'registration/registro.html', data)
+
+@csrf_exempt
+def agregar(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    carrito = Carrito(request)
+    
+    nombre = request.POST.get('nombre')
+    numero = request.POST.get('numero')
+    talla_id = request.POST.get('tallas')
+
+    print("ID de la talla recibido:", talla_id)
+
+    talla = None
+    if talla_id:
+        talla = get_object_or_404(Talla, id=talla_id)
+    
+    carrito.agregar(producto, nombre=nombre, numero=numero, talla=talla)
+    return redirect(to='index')
+
+def eliminar(request, id):
+    carrito = Carrito(request)
+    producto = get_object_or_404(Producto, id=id)
+    carrito.eliminar(producto)
+    return redirect(to='index')
+
+def restar(request, id):
+    carrito = Carrito(request)
+    producto = get_object_or_404(Producto, id=id)
+    carrito.restar(producto)
+    return redirect(to='index')
+
+def limpiar(request,):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect(to='index')
 

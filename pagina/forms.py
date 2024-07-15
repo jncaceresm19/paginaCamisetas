@@ -29,7 +29,7 @@ class ProductoForm(forms.ModelForm):
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control'}),
             'fecha_recepcion': forms.DateInput(attrs={'class': 'form-control'}),
-            'talla': forms.TextInput(attrs={'class': 'form-control'}),
+            'talla': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

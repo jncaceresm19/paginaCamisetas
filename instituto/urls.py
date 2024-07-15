@@ -17,11 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from pagina.views import agregar, eliminar, restar, limpiar
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pagina.urls')),
     path('accounts/',include('django.contrib.auth.urls')),
+    path('agregar/<int:id>/', agregar, name='agregar'),    
+    path('eliminar<int:id>/', eliminar, name='eliminar'),  
+    path('restar<int:id>/', restar, name='restar'),  
+    path('limpiar/', limpiar, name='limpiar'), 
 ]
 
 if settings.DEBUG:

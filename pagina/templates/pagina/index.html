@@ -2,8 +2,19 @@
   {% extends 'pagina/base.html' %}
   {% load static %}
 
-  {% block contenido %}
+  {% block js %}
+  <script>
+    document.querySelectorAll('.ver-mas').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const detalleUrl = this.getAttribute('href');
+            window.location.href = detalleUrl;
+        });
+    });
+</script>
+  {% endblock %}
 
+  {% block contenido %}
    <!--carrusel (fotos)-->
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -61,7 +72,7 @@
               <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             </div>
             <div class="d-flex justify-content-around mb-4">
-              <a href="#"  class="btn btn-primary ">Ver mas</a>
+              <a href="#" class="btn btn-primary ver-mas">Ver más</a>
             </div>
           </div>
         </div>
