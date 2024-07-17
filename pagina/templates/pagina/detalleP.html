@@ -1,0 +1,140 @@
+{% extends 'pagina/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block js %}
+<script>
+  document.getElementById('form-agregar-carrito').addEventListener('submit', function(event) {
+    const nombre = document.getElementById('nombres').value;
+    const numero = document.getElementById('numero').value;
+    const talla_id = document.getElementById('talla').value;
+  });
+</script>
+{% endblock %}
+
+{% block contenido %}
+
+<br><br>
+<div class="contenedor">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="contenedor-img">
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid" />
+      </div>
+    </div>
+    <div class="col-lg-6">
+      {% if producto %}
+      <div class="contenedor-info-prod" id="{{producto.id}}" style="display: block;">
+        <br><h1>{{ producto.nombre }}</h1>
+        <h5>{{ producto.descripcion }}</h5>
+        <div class="contenedor-precio">
+          <span class="precio">${{ producto.precio | intcomma }}</span>
+        </div>
+        <br>
+        <div class="contenedor-detalles-prod-per">
+          <form id="form-agregar-carrito" method="POST" action="{% url 'agregar' producto.id %}">
+            <div class="contenedor-detalles-prod">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="talla">Tallas</label>
+                  <select name="talla" id="talla_id" class="form-control">
+                    {% for talla in producto.talla.all %}
+                    <option value="{{ talla.id }}">{{ talla.nombre }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+            </div>
+            <br>
+            {% csrf_token %}
+            <h4>Personaliza tu camiseta</h4>
+            <section class="regist-name-num">
+              <label for="nombres">Nombre</label>
+              <input class="form-controls" type="text" name="nombre" id="nombres">
+              <p>$5.000 (indique NOMBRE para camiseta)</p> 
+              <label for="numero">Número</label>
+              <input class="form-controls" type="text" name="numero" id="numero">
+              <p>$5.000 (indique NUMERO para camiseta)</p>
+              <div class="contenedor-add-cart">
+                <button type="submit" class="btn btn-add-cart btn-link"><i class="bi-cart-plus"></i></button>
+                <a href="#" class="btn btn-add-cart">Comprar</a><br>
+              </div>
+            </section>
+          </form>
+        </div>
+      </div><br>
+      {% endif %}
+      <div class="contenedor-descrip">
+        <div class="title-descrip">
+          <h4>Descripción</h4>
+        </div>
+        <div class="text-descrip">
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
+            delectus commodi, mollitia, consequatur ex dolorum maiores beatae
+            quidem maxime rem, dolore ullam recusandae repudiandae tempora.
+            Unde neque suscipit voluptas facere!, Lorem ipsum dolor, sit amet 
+            consectetur adipisicing elit. Sint delectus commodi, mollitia, 
+            consequatur ex dolorum maiores beatae uidem maxime rem, dolore
+            ullam recusandae repudiandae tempora.Unde neque suscipit voluptas 
+            facere!
+          </p>
+        </div>
+      </div>
+      <div class="contenedor-info-add">
+        <div class="title-info-add">
+          <h4>Información adicional</h4>
+        </div>
+        <div class="text-info-add">
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
+            delectus commodi, mollitia, consequatur ex dolorum maiores beatae
+            quidem maxime rem, dolore ullam recusandae repudiandae tempora.
+            Unde neque suscipit voluptas facere!
+          </p>
+        </div>
+      </div>
+      <div class="contenedor-social">
+        <h4>Compartir</h4>
+        <div class="contenedor-btn-social">
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-twitter"></i>                      
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="container">
+  <h3 class="text-center">También te recomendamos</h3>
+  <br>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for p in productos_interes %}
+    <div class="col-md-4">
+      <div class="card">
+        {% if p.imagen %}
+        <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="{{ p.nombre }}">
+        {% endif %}
+        <div class="card-body">
+          <h4 class="card-title fw-bold">{{ p.nombre }}</h4>
+          <h5 class="card-title fw-bold">$ {{ p.precio | intcomma }}</h5>
+          <div class="rating">
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+          </div>
+          <p class="card-text">{{ p.descripcion }}</p>
+        </div>
+        <div class="d-flex justify-content-around mb-4">
+          <a href="#" class="btn btn-primary">Ver más</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<br>
+<br>
+{% endblock %}

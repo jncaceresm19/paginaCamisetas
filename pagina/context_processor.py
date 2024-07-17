@@ -2,6 +2,6 @@ def total_carrito(request):
     total = 0
     if 'carrito' in request.session:
         for key, value in request.session['carrito'].items():
-            if 'acumulado' in value:
-                total += int(value['acumulado'])
+            total += value['precio'] * value['cantidad']
     return {'total_carrito': total}
+

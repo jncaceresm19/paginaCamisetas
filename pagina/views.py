@@ -25,47 +25,20 @@ def index(request):
     }
     return render(request, 'pagina/index.html', data)
 
+def detalleP(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)  
+
+    interes_ids = [14, 15, 18]
+    productos_interes = Producto.objects.filter(pk__in=interes_ids)
+
+    data = {
+        'producto': producto,
+        'productos_interes': productos_interes,
+    }
+    return render(request, 'pagina/detalleP.html', data)
+
 def base(request):
     return render(request, 'pagina/base.html')
-
-def alemania(request):
-    alemania_ids = [1, 2]
-    productos_alemania = Producto.objects.filter(pk__in=alemania_ids)
-
-    interes_ids = [11, 14, 15]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_alemania': productos_alemania,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/alemania.html', data)
-
-def brasil(request):
-    brasil_ids = [11, 12]
-    productos_brasil = Producto.objects.filter(pk__in=brasil_ids)
-
-    interes_ids = [9, 15, 18]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_brasil': productos_brasil,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/brasil.html', data)
-
-def argentina(request):
-    argentina_ids = [9, 10]
-    productos_argentina = Producto.objects.filter(pk__in=argentina_ids)
-
-    interes_ids = [11, 14, 15]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_argentina': productos_argentina,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/argentina.html', data)
 
 def colocolo(request):
     colocolo_ids = [15, 16, 17]
@@ -80,15 +53,14 @@ def colocolo(request):
     }
     return render(request, 'pagina/colocolo.html', data)
 
-def cololocal(request):
-    colo_ids = [15, 16, 17]
-    productos_colo = Producto.objects.filter(pk__in=colo_ids)
+def cololocal(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)  
 
     interes_ids = [2, 9, 11]
     productos_interes = Producto.objects.filter(pk__in=interes_ids)
 
     data = {
-        'productos_colo': productos_colo,
+        'producto': producto,
         'productos_interes': productos_interes,
         }
     return render(request, 'pagina/cololocal.html',data)
@@ -110,45 +82,6 @@ def contacto(request):
 
 
     return render(request, 'pagina/contacto.html', data)
-
-def madrid(request):
-    madrid_ids = [3, 4]
-    productos_madrid = Producto.objects.filter(pk__in=madrid_ids)
-
-    interes_ids = [2, 15, 18]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_madrid': productos_madrid,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/madrid.html', data)
-
-def manchester(request):
-    manchester_ids = [5, 6]
-    productos_manchester = Producto.objects.filter(pk__in=manchester_ids)
-
-    interes_ids = [3, 7, 10]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_manchester': productos_manchester,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/manchester.html', data)
-
-def psg(request):
-    psg_ids = [7, 8]
-    productos_psg = Producto.objects.filter(pk__in=psg_ids)
-
-    interes_ids = [10, 12, 14]
-    productos_interes = Producto.objects.filter(pk__in=interes_ids)
-
-    data = {
-        'productos_psg': productos_psg,
-        'productos_interes': productos_interes,
-        }
-    return render(request, 'pagina/psg.html',data)
 
 def restodelmundo(request):
     resto_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -282,38 +215,46 @@ def registro(request):
         data["form"]=formulario
     return render(request, 'registration/registro.html', data)
 
-@csrf_exempt
 def agregar(request, id):
     producto = get_object_or_404(Producto, id=id)
     carrito = Carrito(request)
     
     nombre = request.POST.get('nombre')
     numero = request.POST.get('numero')
-    talla_id = request.POST.get('tallas')
+    talla_id = request.POST.get('talla')
 
-    print("ID de la talla recibido:", talla_id)
-
-    talla = None
     if talla_id:
         talla = get_object_or_404(Talla, id=talla_id)
     
-    carrito.agregar(producto, nombre=nombre, numero=numero, talla=talla)
-    return redirect(to='index')
+    carrito.agregar(producto, nombre=nombre, numero=numero, talla=talla.nombre)
+
+    return redirect('detalleP', producto_id=producto.id)
 
 def eliminar(request, id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=id)
     carrito.eliminar(producto)
-    return redirect(to='index')
+  
+    return redirect('detalleP', producto_id=producto.id)
 
 def restar(request, id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=id)
     carrito.restar(producto)
-    return redirect(to='index')
+    
+    return redirect('detalleP', producto_id=producto.id)
 
-def limpiar(request,):
+def sumar(request, id):
+    carrito = Carrito(request)
+    producto = get_object_or_404(Producto, id=id)
+    carrito.sumar(producto)
+    
+    return redirect('detalleP', producto_id=producto.id)
+
+
+def limpiar(request):
     carrito = Carrito(request)
     carrito.limpiar()
-    return redirect(to='index')
+    productos = Producto.objects.all()  
+    return render(request, 'pagina/detalleP.html')
 

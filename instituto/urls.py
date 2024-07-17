@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from pagina.views import agregar, eliminar, restar, limpiar
+from pagina.views import agregar, eliminar, restar, limpiar, sumar
 
 
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('agregar/<int:id>/', agregar, name='agregar'),    
     path('eliminar<int:id>/', eliminar, name='eliminar'),  
     path('restar<int:id>/', restar, name='restar'),  
+    path('sumar<int:id>/', sumar, name='sumar'), 
     path('limpiar/', limpiar, name='limpiar'), 
 ]
 

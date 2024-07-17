@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Marca(models.Model):
     nombre = models.CharField(max_length=100)
@@ -49,6 +50,15 @@ class Contacto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class CarritoCompras(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    fecha_agregado = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Carrito de {self.cliente.nombre}"
 
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
