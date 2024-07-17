@@ -97,7 +97,7 @@ def restodelmundo(request):
     return render(request, 'pagina/restodelmundo.html', data)
 
 def selechile(request):
-    selechile_ids = [13, 14]
+    selechile_ids = [13, 14, 20]
     productos_chile = Producto.objects.filter(pk__in=selechile_ids)
 
     interes_ids = [5, 15, 18]
@@ -214,6 +214,7 @@ def registro(request):
             return redirect(to="index")
         data["form"]=formulario
     return render(request, 'registration/registro.html', data)
+
 
 def agregar(request, id):
     producto = get_object_or_404(Producto, id=id)

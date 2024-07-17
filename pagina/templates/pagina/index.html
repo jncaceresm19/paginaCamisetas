@@ -15,6 +15,7 @@
   {% endblock %}
 
   {% block contenido %}
+  {% load humanize %} 
    <!--carrusel (fotos)-->
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -48,36 +49,37 @@
   </div><br> 
 
   <!--sección RESTO DEL MUNDO-->
-  {% load humanize %}
   <div class="container">
-   <h3 class="text-center">Camisetas más vendidas sección Resto del Mundo</h3><br>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {% for p in productos_internacionales %}
-        <div class="col-md-4">
-          <div class="card">
-            {% if p.imagen %}
-            <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
-            {% endif %}
-            <div class="card-body">
-              <h4 class="card-title fw-bold">{{p.nombre}}</h4>
-              <h5 class="card-title fw-bold">{{p.descripcion}}</h5>
-              <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
-              <div class="rating">
-                <i class="bi bi-star star"></i>
-                <i class="bi bi-star star"></i>
-                <i class="bi bi-star star"></i>
-                <i class="bi bi-star star"></i>
-                <i class="bi bi-star star"></i>
-              </div>
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    <h3 class="text-center">Camisetas más vendidas sección Resto del Mundo</h3><br>
+  
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+      {% for p in productos_internacionales %}
+      <div class="col-md-4">
+        <div class="card">
+          {% if p.imagen %}
+          <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h4 class="card-title fw-bold">{{ p.nombre }}</h4>
+            <h5 class="card-title fw-bold">{{ p.descripcion }}</h5>
+            <h5 class="card-title fw-bold">$ {{ p.precio | intcomma }}</h5>
+            <div class="rating">
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
+              <i class="bi bi-star star"></i>
             </div>
-            <div class="d-flex justify-content-around mb-4">
-              <a href="{% url 'detalleP' p.id %}" class="btn btn-primary ver-mas">Ver más</a>
-            </div>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </div>
+          <div class="d-flex justify-content-around mb-4">
+            <a href="{% url 'detalleP' p.id %}" class="btn btn-primary ver-mas">Ver más</a>
           </div>
         </div>
-        {% endfor %}
-  </div><br><br>
+      </div>
+      {% endfor %}
+    </div><br><br>
+  </div>
 
   <!--sección CHILE-->
     <h3 class="text-center">Camisetas más vendidas sección Chile</h3><br>

@@ -4,67 +4,16 @@
 
 {% block js %}
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      let imgchange3 = document.getElementById("imgChange3");
-  
-      let localBtn = document.getElementById("local");
-      let visitaBtn = document.getElementById("visita");
-      let alternativaBtn = document.getElementById("alternativa");
-  
-      let imgLocal = "{% static 'pagina/img/chile/Camiseta_Local_Chile_2024_Rojo_IP8453_01_laydown.avif' %}";
-      let imgVisita = "{% static 'pagina/img/chile/Camiseta_Visitante_Chile_2024_Bl_2_840x840.webp' %}" ;
-      let imgAlternativa = "";
-  
-      function changeImage(color) {
-          if (color === 'local') {
-              imgchange3.src = imgLocal;
-          } else if (color === 'visita') {
-              imgchange3.src = imgVisita;
-          } else if (color === 'alternativa') {
-              imgchange3.src = imgAlternativa;
-          }
-      }
-  
-      localBtn.addEventListener("click", function() {
-          changeImage('local');
-      });
-      visitaBtn.addEventListener("click", function() {
-          changeImage('visita');
-      });
-      alternativaBtn.addEventListener("click", function() {
-          changeImage('alternativa');
-      });
-  
-      changeImage('local');
+  document.getElementById('form-agregar-carrito').addEventListener('submit', function(event) {
+    const nombre = document.getElementById('nombres').value;
+    const numero = document.getElementById('numero').value;
+    const talla_id = document.getElementById('talla').value;
   });
-</script>
-
-<script>
-  window.onload = function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var imageUrl = urlParams.get('imageUrl');
-
-    if (imageUrl) {
-      document.getElementById('imgChange3').src = imageUrl;
-    }
-  };
-</script>
-
-<script>
-  document.getElementById('local').addEventListener('click', function() {
-  document.getElementById('producto-13').style.display = 'block';
-  document.getElementById('producto-14').style.display = 'none';
-});
-
-  document.getElementById('visita').addEventListener('click', function() {
-  document.getElementById('producto-13').style.display = 'none';
-  document.getElementById('producto-14').style.display = 'block';
-});
 </script>
 {% endblock %}
 
 {% block contenido %} 
-{% load humanize %}
+{% load humanize %} 
 <!--Imagen BANNER-->
 <center><img class="imglogo img-fluid" src="{% static 'pagina/img/chile/banner-chile_1400x450.jpg' %}" alt="centered image" height="50%" width="100%"><br><br>
 </center>
@@ -75,145 +24,38 @@
  <!--Imagen de logo liga-->
 <header class="d-flex justify-content-center align-items-center">
   <center><img class="imglogo img-fluid"src="{% static 'pagina/img/CHILE.PNG' %}" alt="centered image" height="50%" width="50%"> </center>
-</header>
-
- <!--Container eleccion-->
-<h3 class="text1">Seleciona Camiseta Local/Visita:</h3>
-<div class="seleccion-camiseta">
-  <div id="local"><H5>L</H5></div>
-  <div id="visita"><H5>V</H5></div>
-</div>
-  <!--Container CHILE camiseta-->
-  <div class="contenedor">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="contenedor-img">
-            <img src="{% static 'pagina/img/chile/Camiseta_Local_Chile_2024_Rojo_IP8453_01_laydown.avif' %}" id="imgChange3" alt="" class="img-fluid"/>
+</header><br><br>
+<!--detalle-->
+<center><div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for p in productos_chile %}
+    <div class="col-md-4">
+      <div class="card">
+        {% if p.imagen %}
+        <img src="{{ p.imagen.url }}" class="card-img img-fluid" alt="...">
+        {% endif %}
+        <div class="card-body">
+          <h4 class="card-title fw-bold">{{p.nombre}}</h4>
+          <h5 class="card-title fw-bold">{{p.descripcion}}</h5>
+          <h5 class="card-title fw-bold">$ {{p.precio | intcomma}}</h5>
+          <div class="rating">
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
+            <i class="bi bi-star star"></i>
           </div>
+          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
-      <div class="col-lg-6">
-        {% for p in productos_chile %}
-        {% if p.id == 13 %}
-        <br><div class="contenedor-info-prod" id="producto-13" style="display: block;">
-          <h1>{{p.nombre}}</h1>
-          <h5>{{p.descripcion}}</h5>
-          <div class="contenedor-precio">
-            <span class="precio">${{p.precio | intcomma}}</span>
-          </div><br>
-          <div class="contenedor-detalles-prod">
-            <div class="form-group">
-              <label for="talla">Tallas</label>
-              <select name="size" id="size" class="form-control">
-              {% for talla in p.talla.all %}
-                <option value="{{ talla }}">{{ talla.nombre }}</option>
-              {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="contenedor-detalles-prod-per">
-            <h4>Personaliza tu camiseta</h4>
-            <form id="form-agregar-carrito" method="POST" action="{% url 'agregar' p.id %}">
-                {% csrf_token %}
-                <section class="regist-name-num">
-                    <label for="nombres">Nombre</label>
-                    <input class="form-controls" type="text" name="nombre" id="nombres">
-                    <p>$5.000 (indique NOMBRE para camiseta)</p> 
-                    <label for="numero">Número</label>
-                    <input class="form-controls" type="text" name="numero" id="numero">
-                    <p>$5.000 (indique NUMERO para camiseta)</p>
-                    <div class="contenedor-add-cart">
-                      <button type="submit" class="btn btn-add-cart btn-link"><i class="bi-cart-plus"></i></button>
-                      <a href="#" class="btn btn-add-cart">Comprar</a>                               
-                    </div>
-                </section>          
-            </form>
+        <div class="d-flex justify-content-around mb-4">
+          <a href="{% url 'detalleP' p.id %}" class="btn btn-primary ">Ver mas</a>
         </div>
       </div>
-        {% elif p.id == 14 %}
-        <div class="contenedor-info-prod" id="producto-14" style="display: none;">
-          <h1>{{p.nombre}}</h1>
-          <h5>{{p.descripcion}}</h5>
-          <div class="contenedor-precio">
-            <span class="precio">${{p.precio | intcomma}}</span>
-          </div><br>
-          <div class="contenedor-detalles-prod">
-            <div class="form-group">
-              <label for="talla">Tallas</label>
-              <select name="size" id="size" class="form-control">
-              {% for talla in p.talla.all %}
-                <option value="{{ talla }}">{{ talla.nombre }}</option>
-              {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="contenedor-detalles-prod-per">
-            <h4>Personaliza tu camiseta</h4>
-            <form id="form-agregar-carrito" method="POST" action="{% url 'agregar' p.id %}">
-                {% csrf_token %}
-                <section class="regist-name-num">
-                    <label for="nombres">Nombre</label>
-                    <input class="form-controls" type="text" name="nombre" id="nombres">
-                    <p>$5.000 (indique NOMBRE para camiseta)</p> 
-                    <label for="numero">Número</label>
-                    <input class="form-controls" type="text" name="numero" id="numero">
-                    <p>$5.000 (indique NUMERO para camiseta)</p>
-                    <div class="contenedor-add-cart">
-                      <button type="submit" class="btn btn-add-cart btn-link"><i class="bi-cart-plus"></i></button>
-                      <a href="#" class="btn btn-add-cart">Comprar</a>                               
-                    </div>
-                </section>          
-            </form>
-        </div>
-      </div>
-          {% endif %}
-        {% endfor %}
-      
-    <div class="contenedor-descrip">
-        <div class="title-descrip">
-          <h4>Descripción</h4>
-        </div>
-        <div class="text-descrip">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
-            delectus commodi, mollitia, consequatur ex dolorum maiores beatae
-            quidem maxime rem, dolore ullam recusandae repudiandae tempora.
-            Unde neque suscipit voluptas facere!, Lorem ipsum dolor, sit amet 
-            consectetur adipisicing elit. Sint delectus commodi, mollitia, 
-            consequatur ex dolorum maiores beatae uidem maxime rem, dolore
-            ullam recusandae repudiandae tempora.Unde neque suscipit voluptas 
-            facere!
-          </p>
-        </div>
     </div>
-
-    <div class="contenedor-info-add">
-        <div class="title-info-add">
-          <h4>Información adicional</h4>
-        </div>
-        <div class="text-info-add">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
-            delectus commodi, mollitia, consequatur ex dolorum maiores beatae
-            quidem maxime rem, dolore ullam recusandae repudiandae tempora.
-            Unde neque suscipit voluptas facere!
-          </p>
-        </div>
-    </div>
-    <div class="contenedor-social">
-        <h4>Compartir</h4>
-        <div class="contenedor-btn-social">
-          <i class="bi bi-instagram"></i>
-          <i class="bi bi-facebook"></i>
-          <i class="bi bi-twitter"></i>                      
-        </div>
-    </div>
-    </div>   
-    </div>
-    </div>   
-  </div>
-<!--FOTOS-->
+    {% endfor %}
+</div></center><br><br>
+<!--detalle-->
+ 
 <center>
     <img class="imglogo img-fluid" src="{% static 'pagina/img/chile/CHILE1.jpg' %}" alt="centered image" height="600" width="400"> 
     <img class="imglogo img-fluid" src="{% static 'pagina/img/chile/CHILE2.jpg' %}" alt="centered image" height="600" width="400">

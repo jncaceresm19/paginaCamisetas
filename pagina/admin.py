@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Producto, Marca, Cliente, Pedido, Contacto, Talla
+from .models import Producto, Marca, Cliente, Pedido, Contacto, Talla, CarritoCompras
 
 
 class ProductosAdmin(admin.ModelAdmin):
@@ -21,3 +21,4 @@ admin.site.register(Cliente)
 admin.site.register(Pedido)
 admin.site.register(Contacto)
 admin.site.register(Talla)
+admin.site.register(CarritoCompras)

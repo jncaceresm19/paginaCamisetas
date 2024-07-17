@@ -78,3 +78,5 @@ class Carrito:
     def limpiar(self):
         self.request.session["carrito"] = {}
         self.request.session.modified = True
+
+
