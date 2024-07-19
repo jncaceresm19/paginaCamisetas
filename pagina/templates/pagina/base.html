@@ -27,6 +27,8 @@
     </style>
   </head>
   <body>
+
+    
     <script>
       function agregarProducto(producto_id) {
           // Example AJAX request using native JavaScript fetch API
@@ -115,7 +117,9 @@
       });
   }
   </script>
-      
+
+
+
   {% load humanize %}
  <!--barra de menu-->
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -169,73 +173,82 @@
         <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-cart-fill"></i>
         </a>
         <div class="offcanvas offcanvas-end offcanvas-offcanvas-end-transparent" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Tu Carrito de compras</h5>
+          <div class="offcanvas-header d-flex justify-content-between align-items-center">
+            <h5 id="offcanvasRightLabel">Tu Carrito({{total_producto}})</h5>
+            <div>
+                <a href="{% url 'limpiar' %}" class="bi bi-trash3 me-2 text-dark fs-2"></a>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
-              <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Camiseta</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Talla</th>
-                        <th scope="col"></th>
-                        <th scope="col">Cantidad</th>
-                    </tr>
-                </thead>
-              <tbody>
-                {% if request.session.carrito.items %}
-                    {% for key, value in request.session.carrito.items %}
+        </div>
+          <div class="offcanvas-body">
+            {% if request.session.carrito.items %}
+            <form id="form-pagar" method="POST" action="#">
+                {% csrf_token %}
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                {% if value.imagen %}
-                                    <img src="{{ value.imagen }}" alt="{{ value.nombre }}" width="50">
-                                {% else %}
-                                    No imagen
-                                {% endif %}
-                            </td>
-                            <td> <span id ="precio-{{ value.producto_id}}">${{ value.precio | intcomma }}</span></td>
-                            <td>{{ value.tallas }}</td>
-                            <td>
-                              <span id ="cantidad-{{ value.producto_id}}">{{ value.cantidad}}</span> </td>
-                            <td>
-                                <!-- <a href="{% url 'agregar' value.producto_id %}" class="badge btn btn-dark badge-dark agregar-producto">+</a> -->
-                                <a href="#" onclick="restarProducto('{{ value.producto_id }}')" class="badge btn btn-dark badge-dark restar-producto">-</a>
-                                <a href="#" onclick="agregarProducto('{{ value.producto_id }}')" class="badge btn btn-dark badge-dark agregar-producto">+</a>
-             
-                            </td>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+
                         </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="5">
-                            <div class="alert alert-info text-center">Sin productos</div>
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <th scope="row">Total:</th>
-                    <th colspan="4"> <span id ="total">${{ total_carrito | intcomma }}</span></th>
-                </tr>
-            </tbody>
+                    </thead>
+                    <tbody>
+                        {% for key, value in request.session.carrito.items %}
+                            <tr>
+                                <td>
+                                    {% if value.imagen %}
+                                        <img src="{{ value.imagen }}" alt="{{ value.nombre }}" width="70">
+                                    {% else %}
+                                        No imagen
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div>
+                                        <h6>{{ value.nombre }}</h6>
+                                        Talla({{ value.talla }})
+                                        {% if value.personalizacion.nombre or value.personalizacion.numero %}
+                                            <h6>Personalización:</h6>
+                                            {% if value.personalizacion.nombre %}
+                                                {{ value.personalizacion.nombre }}
+                                            {% endif %}
+                                            {% if value.personalizacion.numero %}
+                                                {{ value.personalizacion.numero }}
+                                            {% endif %}                      
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td><span id="precio-{{ value.producto_id }}">${{ value.precio | intcomma }}</span>
+                                  <td>
+                                   
+                                    <span id="cantidad-{{ value.producto_id }}">{{ value.cantidad }}</span>
+                                    <div>
+                                      <a href="#" onclick="restarProducto('{{ value.producto_id }}')" class="badge btn btn-dark badge-dark restar-producto">-</a>
+                                      <a href="#" onclick="agregarProducto('{{ value.producto_id }}')" class="badge btn btn-dark badge-dark agregar-producto">+</a>
+                                      
+                                      <a href="{% url 'eliminar' value.producto_id %}" class="bi bi-trash3 text-dark"></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                <hr>
-                <div>
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <a href="{% url 'limpiar' %}" class="btn btn-primary">Limpiar</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="btn btn-primary">Guardar</a>
-                        </div>
-                    </div>
+            </form>
+        {% else %}
+            <div class="alert alert-info text-center">Sin productos</div>
+        {% endif %}                  
+            </tbody>
+        </table>
+                <div class="row text-center mt-3">
+                  <div class="col-md-6">
+                    <th scope="row">Total:</th>
+                      <th colspan="4"> <span id ="total">${{ total_carrito | intcomma }}</span></th>
+                  </div>
+                    <button type="submit" class="btn btn-primary">Pagar({{total_producto}})</button>
                 </div>
-            
-    
-    
-            </div>
+              </form>
           </div>
+      </div>
         </i>
    </div>
   </div>
