@@ -215,36 +215,39 @@ def registro(request):
         data["form"]=formulario
     return render(request, 'registration/registro.html', data)
 
-
+@csrf_exempt
 def agregar(request, id):
     producto = get_object_or_404(Producto, id=id)
     carrito = Carrito(request)
-    
+    print(carrito)
     nombre = request.POST.get('nombre')
     numero = request.POST.get('numero')
-    talla_id = request.POST.get('talla')
+    talla_id = request.POST.get('tallas')
 
+    print("ID de la talla recibido:", talla_id)
+
+    talla = None
     if talla_id:
         talla = get_object_or_404(Talla, id=talla_id)
     
-    carrito.agregar(producto, nombre=nombre, numero=numero, talla=talla.nombre)
+    carrito.agregar(producto, nombre=nombre, numero=numero, talla=talla)
+    return redirect(to='index')
 
-    return redirect('detalleP', producto_id=producto.id)
-
+@csrf_exempt
 def eliminar(request, id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=id)
     carrito.eliminar(producto)
-  
-    return redirect('detalleP', producto_id=producto.id)
+    return redirect(to='index')
 
+@csrf_exempt
 def restar(request, id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=id)
     carrito.restar(producto)
-    
-    return redirect('detalleP', producto_id=producto.id)
+    return redirect(to='index')
 
+@csrf_exempt
 def sumar(request, id):
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=id)
@@ -253,9 +256,8 @@ def sumar(request, id):
     return redirect('detalleP', producto_id=producto.id)
 
 
-def limpiar(request):
+@csrf_exempt
+def limpiar(request,):
     carrito = Carrito(request)
     carrito.limpiar()
-    productos = Producto.objects.all()  
-    return render(request, 'pagina/detalleP.html')
-
+    return redirect(to='index')
